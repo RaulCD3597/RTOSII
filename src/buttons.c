@@ -46,6 +46,8 @@ void buttons_init(void)
 
 static void buttons_task(void *pvParameters)
 {
+    uint8_t * button_msg = NULL;
+
     for (;;)
     {
         debounceSM_Update(&tecla1);
@@ -53,16 +55,16 @@ static void buttons_task(void *pvParameters)
 
         if (tecla1.elapsed_time != 0)
         {
-            uint8_t msg[15];
-            sprintf(msg, "TEC1 T%d", tecla1.elapsed_time);
-            uart_print(msg);
+            button_msg = pvPortMalloc(15 * sizeof(uint8_t));
+            sprintf(button_msg, "TEC1 T%d", tecla1.elapsed_time);
+            uart_print(button_msg);
         }
 
         if (tecla2.elapsed_time != 0)
         {
-            uint8_t msg[15];
-            sprintf(msg, "TEC2 T%d", tecla2.elapsed_time);
-            uart_print(msg);
+            button_msg = pvPortMalloc(15 * sizeof(uint8_t));
+            sprintf(button_msg, "TEC2 T%d", tecla2.elapsed_time);
+            uart_print(button_msg);
         }
     }
     

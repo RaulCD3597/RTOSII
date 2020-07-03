@@ -68,6 +68,7 @@ static void uart_task(void *pvParameters)
     {
         xQueueReceive(uart_queue, (void *) &uart_msg, portMAX_DELAY);
         printf("%s\r\n", uart_msg);
+        vPortFree(uart_msg);
     }
 }
 
